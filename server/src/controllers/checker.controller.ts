@@ -1,8 +1,6 @@
 import xlsx from 'xlsx';
 import axios from 'axios';
-import { asyncHandler } from '../utils/AysncHandler';
-
-
+import fs from 'fs/promises';
 
 interface redirectObject {
     address: string;
@@ -18,11 +16,12 @@ function wait(ms: number) {
 export const redirectChecker = async (path: string) => {
     console.log('working')
     const result: redirectObject[] = [];
-    const workbook = xlsx.readFile('./uplaods/Book1.xlsx')
+    const workbook = xlsx.readFile(path)
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = xlsx.utils.sheet_to_json(sheet);
     
-    for (let i = 0; i < data.length; i++) {
+    try {
+        for (let i = 0; i < data.length; i++) {
         const item = data[i] as redirectObject
         const response = await axios.get(item.address, {
             maxRedirects: 0,
@@ -37,8 +36,12 @@ export const redirectChecker = async (path: string) => {
             })
         }
         await wait(3000)
-        
     }
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+    await fs.unlink(path)
     // console.log(result)
     return result
 
