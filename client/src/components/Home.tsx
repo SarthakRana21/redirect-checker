@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, type FormEvent } from "react"
 import * as xlsx from 'xlsx'
 import { BarLoader } from "react-spinners";
+import ExcelInstructions from "./excelInstruction";
 
 
 interface redirectObject {
@@ -21,30 +22,47 @@ const resutlArea = (data: redirectObject[]) => {
     }
 
     return (
-        <div className="w-full h-full flex flex-col items-center px-4 py-8">
+        <div className="w-full h-full flex flex-col items-center px-4 py-8 text-gray-700">
             <div className="w-full flex justify-evenly items-center">
-                <h2 className="text-2xl font-semibold text-red-600">Faulty Redirect Results: {data.length}</h2>
-                <button 
-                    onClick={() => downloadExcel(data)} 
-                    className="download"
-                    >Download Output Excel
-                </button>
+            <h2 className="text-2xl font-semibold text-violet-400">
+                Faulty Redirect Results: {data.length}
+            </h2>
+            <button
+                onClick={() => downloadExcel(data)}
+                className="download text-white"
+            >
+                Download Output Excel
+            </button>
             </div>
-            <div className="w-full mt-8 max-w-3xl h-90 text-sm space-y-6 overflow-y-scroll transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-                {data.map((item, index) => (
+
+            <div className="w-full mt-7 max-w-3xl h-90 text-sm space-y-6 overflow-y-scroll transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
+            {data.map((item, index) => (
                 <div
-                    key={index}
-                    className="w-full bg-red-200 shadow-md rounded-2xl p-6 border border-gray-200">
-                    <p className="text-gray-700"><span className="font-medium">Address:</span> {item.address}</p>
-                    <p className="text-gray-700"><span className="font-medium">Status Code:</span> {item.status_code}</p>
-                    <p className="text-gray-700"><span className="font-medium">Redirect URL:</span> {item.redirect_url || '—'}</p>
-                    <p className="text-gray-700"><span className="font-medium">Expected URL:</span> {item.expected_url || '—'}</p>
+                key={index}
+                className="w-full bg-gray-600 shadow-md rounded-2xl p-6 border border-gray-800"
+                >
+                <p className="text-gray-100">
+                    <span className="font-medium text-violet-300">Address:</span>
+                    {item.address}
+                </p>
+                <p className="text-gray-100">
+                    <span className="font-medium text-violet-300">Status Code:</span>
+                    {item.status_code}
+                </p>
+                <p className="text-gray-100">
+                    <span className="font-medium text-violet-300">Redirect URL:</span>
+                    {item.redirect_url || '—'}
+                </p>
+                <p className="text-gray-100">
+                    <span className="font-medium text-violet-300">Expected URL:</span>
+                    {item.expected_url || '—'}
+                </p>
                 </div>
-                ))}
+            ))}
             </div>
         </div>
+    );
 
-    )
 }
 
 export default function Home() {    
@@ -55,6 +73,7 @@ export default function Home() {
     const [data, setData] = useState<redirectObject[]>([])
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
+    const [sucess, setSucess] = useState<boolean>(false)
 
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +84,9 @@ export default function Home() {
     }
 
     const handleUpload = async (e: FormEvent) => {
+
+        setSucess(false)
+
         e.preventDefault()
         if(!file) {
             alert("Please upload an excel file")
@@ -83,7 +105,11 @@ export default function Home() {
             })
             // console.log('finised', res.data.data)
             setLoading(false)
-            setData(res.data.data)
+            if(res.data.data.length > 0) {
+                setData(res.data.data)
+            } else {
+                setSucess(true)
+            }
 
         } catch (error) {
             setLoading(false)
@@ -111,8 +137,16 @@ export default function Home() {
                 
             </div>
         </form>
-        {data.length > 0 && resutlArea(data)}
-
+        
+        <div className="mt-8 flex justify-center items-center flex-col gap-3">
+              {sucess && (
+            <div className="text-xl font-semibold text-green-300 underline">
+                Redirect Check Sucess
+            </div>
+        )}
+            {data.length > 0 ? resutlArea(data) : <ExcelInstructions />}
+        </div>
+      
        </div>
     )
 }
