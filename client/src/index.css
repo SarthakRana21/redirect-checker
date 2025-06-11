@@ -23,11 +23,6 @@ a:hover {
   color: #535bf2;
 }
 
-input::placeholder {
-  text-align: center;
-  align-items: center;
-  
-}
 button {
   width: 180px;
   height: 45px;
@@ -50,6 +45,23 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.download {
+  width: 240px;
+  height: 45px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media (prefers-color-scheme: light) {
