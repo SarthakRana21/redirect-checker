@@ -1,5 +1,5 @@
 import multer from "multer";
-import { redirectChecker } from "../controllers/checker.controller";
+import { redirectChecker } from "../controllers/checker.controller.js";
 import { Router } from "express";
 
 const checkerRouter = Router()

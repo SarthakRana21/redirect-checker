@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import { redirectChecker } from './controllers/checker.controller.js'
+import checkerRouter from './routes/checker.route.js'
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
     res.send("redirect checker server side")
 })
 // http://localhost:5000/api/v1/check-redirect
-app.post("/api/v1", redirectChecker)
+app.use("/api/v1", checkerRouter)
 
 
 app.listen(PORT, () => {

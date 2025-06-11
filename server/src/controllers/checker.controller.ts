@@ -1,9 +1,9 @@
 import xlsx from 'xlsx';
 import axios from 'axios';
 import fs from 'fs/promises';
-import { asyncHandler } from '../utils/AysncHandler';
-import { ApiError } from '../utils/ApiError';
-import { ApiResponse } from '../utils/ApiResponse';
+import { asyncHandler } from '../utils/AysncHandler.js';
+import { ApiError } from '../utils/ApiError.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
 
 interface redirectObject {
     address: string;
