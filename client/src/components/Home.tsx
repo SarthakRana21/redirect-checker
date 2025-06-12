@@ -67,11 +67,10 @@ const resutlArea = (data: redirectObject[]) => {
 
 export default function Home() {    
 
-    const API_URL= "http://localhost:5000/api/v1/check-redirect"
+    const API_URL= import.meta.env.VITE_API_URL
 
     const [file, setFile] = useState<File | null>(null)
     const [data, setData] = useState<redirectObject[]>([])
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [loading, setLoading] = useState<boolean>(false);
     const [sucess, setSucess] = useState<boolean>(false)
 
@@ -93,6 +92,7 @@ export default function Home() {
             return
         }
         setLoading(true)
+        
         const formData = new FormData()
         formData.append('file', file, `${Date.now()}-${file.name}`)
 

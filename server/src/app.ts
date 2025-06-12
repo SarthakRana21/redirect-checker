@@ -6,7 +6,7 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: process.env.ORIGIN,
     credentials: true,
 }))
 
@@ -16,11 +16,14 @@ app.use(express.json({
 
 app.use(express.static("public"))
 
-// routes decleration
+
+// Routes Decleration
+
 // http://localhost:5000/
 app.get("/", (req, res) => {
     res.send("redirect checker server side")
 })
+
 // http://localhost:5000/api/v1/check-redirect
 app.use("/api/v1", checkerRouter)
 
