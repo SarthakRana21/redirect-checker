@@ -17,8 +17,7 @@ pipeline {
                 echo("stopping the containers")
                 sh "docker stop ${NAME}_server || true"
                 sh "docker stop ${NAME}_client || true"
-            }
-            steps {
+                
                 echo("Removing Containers")
                 sh "docker rm ${NAME}_client || true"
                 sh "docker rm ${NAME}_server || true"
@@ -27,6 +26,7 @@ pipeline {
                 sh "docker image prune ${NAME}_server || true"
                 sh "docker image prune ${NAME}_client || true"
             }
+
         }
  
         stage('Building Docker Image') {
