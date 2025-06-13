@@ -46,7 +46,7 @@ pipeline {
                     set -a
                     . /var/lib/jenkins/workspace/${NAME}/client/.env
                     set +a
-                    docker run -dit -p 5200:5173 --name ${NAME}_client ${NAME}_client
+                    docker run -dit -p 5200:4173 --name ${NAME}_client ${NAME}_client
                 """
             }
         }
