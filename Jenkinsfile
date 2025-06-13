@@ -38,13 +38,13 @@ pipeline {
             steps {
                 sh """
                     set -a
-                    . ./server/.env
+                    . /var/lib/jenkins/workspace/${NAME}/server/.env
                     set +a
                     docker run -dit -p 5300:5000 --name ${NAME}_server ${NAME}_server
                 """
                 sh """
                     set -a
-                    . ./client/.env
+                    . /var/lib/jenkins/workspace/${NAME}/client/.env
                     set +a
                     docker run -dit -p 5200:5173 --name ${NAME}_client ${NAME}_client
                 """
