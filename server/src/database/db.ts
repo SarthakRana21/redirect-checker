@@ -1,5 +1,5 @@
-import { drizzle } from "drizzle-orm/singlestore/driver";
-import { Database } from "sqlite3";
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import Database from "better-sqlite3";
 import { users } from "../models/users.model";
 import { records } from "../models/records.model";
 
