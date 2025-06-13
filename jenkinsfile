@@ -39,13 +39,13 @@ pipeline {
             sh """
             set -a
             . /var/lib/jenkins/workspace/${NAME}/server/.env
-            docker run -dit -p 5173:5173 --name ${NAME}_server ${NAME}_server
+            docker run -dit -p 5200:5173 --name ${NAME}_server ${NAME}_server
             set +a
             """
             sh """
             set -a
             . /var/lib/jenkins/workspace/${NAME}/client/.env
-            docker run -dit -p 6001:5000 --name ${NAME}_client ${NAME}_client
+            docker run -dit -p 5300:5000 --name ${NAME}_client ${NAME}_client
             set +a
             """
         }
