@@ -29,8 +29,8 @@ pipeline {
 
         stage('Building Docker Images') {
             steps {
-                sh "docker build -t ${NAME}_server -f ./server/Dockerfile ./server"
-                sh "docker build -t ${NAME}_client -f ./client/Dockerfile ./client"
+                sh "docker build -t ${NAME}_server -f ./server/Dockerfile.server ./server"
+                sh "docker build -t ${NAME}_client -f ./client/Dockerfile.client ./client"
             }
         }
 
