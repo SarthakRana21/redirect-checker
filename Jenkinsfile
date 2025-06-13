@@ -8,7 +8,7 @@ pipeline {
         
         stage('Cloning our Git') {
             steps{
-                git branch: master, url: 'https://github.com/SarthakRana21/redirect-checker.git'
+                git branch: 'master', url: 'https://github.com/SarthakRana21/redirect-checker.git'
             }
         }
 
