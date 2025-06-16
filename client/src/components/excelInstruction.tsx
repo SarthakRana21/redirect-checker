@@ -7,7 +7,6 @@ const ExcelInstructions = () => {
 
       <ul className="list-disc pl-6 space-y-1">
         <li><code className="text-[#a786ff] font-medium">address</code> – The URL that needs to be checked</li>
-        <li><code className="text-[#a786ff] font-medium">status_code</code> – The HTTP status code (e.g., 301, 404)</li>
         <li><code className="text-[#a786ff] font-medium">redirect_url</code> – The URL to which the address redirects</li>
       </ul>
 
@@ -17,7 +16,6 @@ const ExcelInstructions = () => {
           <thead className="bg-[#333333]">
             <tr>
               <th className="px-4 py-2 border border-[#3b3b3b] text-left">address</th>
-              <th className="px-4 py-2 border border-[#3b3b3b] text-left">status_code</th>
               <th className="px-4 py-2 border border-[#3b3b3b] text-left">redirect_url</th>
             </tr>
           </thead>
@@ -26,7 +24,6 @@ const ExcelInstructions = () => {
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-1/page.html
               </td>
-              <td className="px-4 py-2 border border-[#3b3b3b]">301</td>
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/new-path-1/page.html
               </td>
@@ -35,7 +32,6 @@ const ExcelInstructions = () => {
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-2/page.html
               </td>
-              <td className="px-4 py-2 border border-[#3b3b3b]">301</td>
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/new-path-2/page.html
               </td>
