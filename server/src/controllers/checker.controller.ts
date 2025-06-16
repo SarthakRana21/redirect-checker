@@ -40,7 +40,7 @@ export const redirectChecker = asyncHandler(async (req, res) => {
                 expected_url: item.redirect_url
             })
         }
-        await wait(3000)
+        await wait(Math.floor(Math.random() * (7000 - 3000 + 1)) + 3000)
     }
     } catch (error) {
         console.log(error)

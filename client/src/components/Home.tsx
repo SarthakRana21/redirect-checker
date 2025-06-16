@@ -125,9 +125,9 @@ export default function Home() {
 
        <div className="mt-10">
          <form onSubmit={handleUpload} className="flex justify-center items-center flex-col gap-10">
-            <div className="w-1/3 border-2 h-32 border-dashed border-purple-500 rounded transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+            <div className="md:w-2/3 lg:w-1/3 border-2 h-32 border-dashed border-purple-500 rounded transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                 <input
-                    className="w-full h-full text-lg content-center pl-[35%] cursor-pointer text-purple-400" 
+                    className="w-full h-full text-lg content-center lg:pl-[26%] pl-[35%] cursor-pointer text-purple-400" 
                     type="file" 
                         accept=".xlsx,.xls"
                         onChange={handleFileChange}/>
@@ -138,7 +138,7 @@ export default function Home() {
             </div>
         </form>
         
-        <div className="mt-8 flex justify-center items-center flex-col gap-3">
+        <div className="my-10 flex justify-center items-center flex-col gap-3">
               {sucess && (
             <div className="text-xl font-semibold text-green-300 underline">
                 Redirect Check Sucess
