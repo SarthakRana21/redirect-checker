@@ -9,4 +9,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+   preview: {
+    port: 4173,
+    allowedHosts: ['redirect-checker.newsoftdemo.info']
+  }
 })
