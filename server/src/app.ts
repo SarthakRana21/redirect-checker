@@ -1,6 +1,9 @@
 import express from 'express'
 import cors from 'cors'
 import checkerRouter from './routes/checker.route.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -9,7 +12,7 @@ app.use(cors({
     origin: process.env.ORIGIN,
     credentials: true,
 }))
-
+console.log(process.env.ORIGIN)
 app.use(express.json({
     limit: "200kb"
 }))
