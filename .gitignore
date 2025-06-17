@@ -1,3 +1,5 @@
+drizzle/
+*.db
 # Logs
 logs
 *.log
