@@ -12,7 +12,7 @@ app.use(cors({
     origin: process.env.ORIGIN,
     credentials: true,
 }))
-console.log(process.env.ORIGIN)
+
 app.use(express.json({
     limit: "200kb"
 }))

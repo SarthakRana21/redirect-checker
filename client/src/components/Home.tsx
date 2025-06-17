@@ -67,7 +67,7 @@ const resutlArea = (data: redirectObject[]) => {
 
 export default function Home() {    
 
-    const API_URL= "http://localhost:5000/api/v1/check-redirect"
+    const API_URL= import.meta.env.VITE_API_URL
 
     const [file, setFile] = useState<File | null>(null)
     const [data, setData] = useState<redirectObject[]>([])
