@@ -6,6 +6,6 @@ export default defineConfig({
   out: "./drizzle/migrations",
   dialect: "sqlite",
   dbCredentials: {
-    url: "./redirect-checker.db",
+    url: "./src/database/redirect-checker.db",
   },
 } satisfies Config );
