@@ -1,5 +1,5 @@
-import { users } from "./users.model.js";
-import { records } from "./records.model.js";
+import { users } from "./users.model";
+import { records } from "./records.model";
 
 export {
     users,

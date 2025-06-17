@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
-import { db } from "../database/db.js";
-import { users } from "../models/users.model.js";
-import { ApiError } from "../utils/ApiError.js";
-import { generateAccessToken, generateRefreshToken } from "../utils/tokens/TokenGenerator.js";
-import { asyncHandler } from "../utils/AysncHandler.js";
-import { ApiResponse } from "../utils/ApiResponse.js";
+import { db } from "../database/db";
+import { users } from "../models/users.model";
+import { ApiError } from "../utils/ApiError";
+import { generateAccessToken, generateRefreshToken } from "../utils/tokens/TokenGenerator";
+import { asyncHandler } from "../utils/AysncHandler";
+import { ApiResponse } from "../utils/ApiResponse";
 import bcrypt from "bcrypt";
 
 const generateRefreshAndAccessTokens = async (userId: number) => {

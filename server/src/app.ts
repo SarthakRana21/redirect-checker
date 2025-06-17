@@ -1,8 +1,8 @@
 import express from 'express'
 import cors from 'cors'
-import checkerRouter from './routes/checker.route.js'
+import checkerRouter from './routes/checker.route'
 import dotenv from 'dotenv'
-import userRouter from './routes/user.routes.js'
+import userRouter from './routes/user.routes'
 
 dotenv.config()
 
