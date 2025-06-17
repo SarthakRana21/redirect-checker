@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import checkerRouter from './routes/checker.route.js'
 import dotenv from 'dotenv'
+import userRouter from './routes/user.routes.js'
 
 dotenv.config()
 
@@ -17,6 +18,8 @@ app.use(express.json({
     limit: "200kb"
 }))
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use(express.static("public"))
 
 
@@ -30,6 +33,8 @@ app.get("/", (req, res) => {
 // http://localhost:5000/api/v1/check-redirect
 app.use("/api/v1", checkerRouter)
 
+// http://localhost:5000/api/v1/user/register
+app.use('/api/v1/user', userRouter)
 
 app.listen(PORT, () => {
     console.log(`\n\nRedirect checker server started \nURL: http://localhost:${PORT}\n`)
