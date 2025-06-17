@@ -10,7 +10,7 @@ const generateRefreshAndAccessTokens = async(userId: number) => {
         const user = await db.select({
             id: users.id,
             email: users.email,
-            username: users.username,
+            fullName: users.fullName,
         }).from(users).where(eq(users.id, userId))
 
         if(!user) throw new Error
@@ -26,8 +26,8 @@ const generateRefreshAndAccessTokens = async(userId: number) => {
 }
 
 const registerUser = asyncHandler(async (req, res) => {
-    const {username, email, password} = req.body
-    const useFileds = [username, email, password]
+    const {email, password} = req.body
+    const useFileds = [email, password]
 
     try {
         

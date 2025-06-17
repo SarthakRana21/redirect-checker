@@ -1,6 +1,6 @@
 export interface userPayload {
     id: number,
-    username: string,
+    fullName: string,
     email: string,
     password?: string,
     refreshToken?: string
