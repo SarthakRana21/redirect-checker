@@ -7,6 +7,8 @@ import { asyncHandler } from "../utils/AysncHandler";
 import { ApiResponse } from "../utils/ApiResponse";
 import bcrypt from "bcrypt";
 import { isPasswordCorrect } from "../utils/PasswordChecker";
+import { AuthRequest } from "../interfaces";
+import { JwtPayload } from "jsonwebtoken";
 
 const generateRefreshAndAccessTokens = async (userId: number) => {
     try {
@@ -135,8 +137,65 @@ const loginUser = asyncHandler(async (req, res) => {
 
 }) 
 
+const logoutUser = asyncHandler(async (req: AuthRequest, res) => {
+    const user = req.user as JwtPayload
+
+    try {
+        if(!user) {
+            res.status(401).json(
+                new ApiResponse(401, null, "Invalid User")
+            )
+        }
+        const update = await db.update(users).set({
+            refreshToken: null
+        }).where(eq(users.id, user[0].id))
+        
+        console.log("logout",update)
+
+        const options = {
+            httpOnly: true,
+            secure: true, // set to false in development if needed
+        };
+
+        res.status(200)
+        .clearCookie("refreshToken", options)
+        .clearCookie("accessToken", options)
+        .json(
+            new ApiResponse(200, "logout sucess")
+        )
+
+    } catch (error) {
+        
+    }
+})
+
+const userProfile = asyncHandler(async (req: AuthRequest, res) => {
+    const user = req.user as JwtPayload
+    if(!user) res.status(401).json(
+        new ApiResponse(401, "invalid user")
+    )
+    
+    try {
+        const profile = await db.select({
+            id: users.id,
+            fullName: users.fullName,
+            email: users.email
+        }).from(users).where(eq(users.id, user[0].id))
+        console.log(profile)
+        res.status(200)
+        .json(
+            new ApiResponse(200, profile, "user profile")
+        )
+
+    } catch (error) {
+        console.log(error)
+        throw new ApiError(400, "something went wrong in user profile")
+    }
+})
 
 export {
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser,
+    userProfile
 }
