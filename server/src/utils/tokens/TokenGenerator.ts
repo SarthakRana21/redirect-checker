@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { userPayload } from "../../interfaces";
 import dotenv from 'dotenv';
+import { randomUUID } from "crypto";
 
 dotenv.config()
 
@@ -15,16 +16,18 @@ const refreshTokenExpiry = "7d"
 export const generateAccessToken = (payload: userPayload): string => {
   return jwt.sign(payload, accessTokenSecret, {
     expiresIn: accessTokenExpiry, 
+    jwtid: randomUUID()
   });
 };
 
 export const generateRefreshToken = (id: number): string => {
   return jwt.sign(
     {
-      id
+      id,
     },
     refreshTokenSecret, {
-      expiresIn: refreshTokenExpiry
+      expiresIn: refreshTokenExpiry,
+      jwtid: randomUUID()
     }
   )
 }
