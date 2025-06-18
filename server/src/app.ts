@@ -3,6 +3,7 @@ import cors from 'cors'
 import checkerRouter from './routes/checker.route'
 import dotenv from 'dotenv'
 import userRouter from './routes/user.routes'
+import cookieParser = require('cookie-parser')
 
 dotenv.config()
 
@@ -21,6 +22,8 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static("public"))
+
+app.use(cookieParser())
 
 
 // Routes Decleration
