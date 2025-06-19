@@ -37,6 +37,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1", checkerRouter)
 
 // http://localhost:5000/api/v1/user/register
+// http://localhost:5000/api/v1/user/login
+// http://localhost:5000/api/v1/user/logout
+// http://localhost:5000/api/v1/user/profile
 app.use('/api/v1/user', userRouter)
 
 app.listen(PORT, () => {
