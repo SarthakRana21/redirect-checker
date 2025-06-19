@@ -1,9 +1,11 @@
+import { Link } from "react-router-dom";
+
 const LoginButton: React.FC = () => {
   return (
     <div className="flex justify-center">
-      <button
+      <Link to="/login"
         className="
-          px-6 py-2 rounded-xl text-sm font-medium text-white
+          px-6 py-2 text-white rounded-xl text-sm font-medium text-white
           bg-gradient-to-r from-slate-700 to-slate-600
           shadow-md
           transition-all duration-300
@@ -11,7 +13,7 @@ const LoginButton: React.FC = () => {
           "
       >
         Login
-      </button>
+      </Link>
     </div>
   );
 };

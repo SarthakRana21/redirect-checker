@@ -1,7 +1,7 @@
 
 const ExcelInstructions = () => {
   return (
-    <div className="max-w-3xl mx-auto p-6 rounded-lg shadow-md space-y-4 bg-[#2f2f2f] text-[#eaeaea] border border-[#3b3b3b]">
+    <div className="max-w-3xl mx-auto p-6 rounded-lg shadow-md space-y-4 bg-gray-800 text-[#eaeaea] border border-[#3b3b3b]">
       <h2 className="text-2xl font-semibold text-[#a786ff]">📄 Excel File Format Instructions</h2>
       <p>Please ensure your Excel file follows this structure with <strong>exact column names</strong>:</p>
 
@@ -15,12 +15,12 @@ const ExcelInstructions = () => {
         <table className="min-w-full text-sm border border-[#3b3b3b]">
           <thead className="bg-[#333333]">
             <tr>
-              <th className="px-4 py-2 border border-[#3b3b3b] text-left">address</th>
-              <th className="px-4 py-2 border border-[#3b3b3b] text-left">redirect_url</th>
+              <th className="px-4 py-2 bg-gray-700 border border-[#3b3b3b] text-left">address</th>
+              <th className="px-4 py-2 bg-gray-700 border border-[#3b3b3b] text-left">redirect_url</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:bg-[#383838]">
+            <tr className="hover:bg-gray-700">
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-1/page.html
               </td>
@@ -28,7 +28,7 @@ const ExcelInstructions = () => {
                 https://www.example.com/new-path-1/page.html
               </td>
             </tr>
-            <tr className="hover:bg-[#383838]">
+            <tr className="hover:bg-gray-700">
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-2/page.html
               </td>
