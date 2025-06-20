@@ -21,7 +21,7 @@ const LoginButton: React.FC = () => {
 const RegisterButton: React.FC = () => {
   return (
     <div className="flex justify-center">
-      <button
+      <Link to="/register"
         className="
           px-6 py-2 rounded-xl text-sm font-medium text-white
           bg-gradient-to-r from-indigo-600 to-purple-600
@@ -31,7 +31,7 @@ const RegisterButton: React.FC = () => {
           "
       >
         Register
-      </button>
+      </Link>
     </div>
   );
 };
@@ -39,17 +39,17 @@ const RegisterButton: React.FC = () => {
 const MyAccountButton: React.FC = () => {
   return (
     <div className="flex justify-center">
-      <button
+      <Link to={"/profile"}
         className="
           px-6 py-2 rounded-xl text-sm font-medium text-white
-          bg-gradient-to-r from-slate-700 to-slate-600
+          bg-gradient-to-r from-indigo-600 to-purple-600
           shadow-md
           transition-all duration-300
-          hover:bg-gradient-to-r hover:from-slate-600
+          hover:bg-gradient-to-r hover:from-indigo-500
           "
         >
         My Account
-      </button>
+      </Link>
     </div>
   );
 };
