@@ -2,26 +2,12 @@ import React from "react";
 import { useProfile } from "../hooks/useProfile.hook";
 
 const ProfilePage: React.FC = () => {
-  const { data: profile, isLoading, isError} = useProfile();
+  const { data: profile} = useProfile();
+    
   console.log([profile])
   const name = profile?.data[0]?.fullName
   const email = profile?.data[0]?.email
 
-  if (isLoading) {
-    return (
-      <div className="min-h-[70vh] flex justify-center items-center bg-gray-900 text-white">
-        Loading profile...
-      </div>
-    );
-  }
-
-  if (isError) {
-    return (
-      <div className="min-h-[70vh] flex justify-center items-center bg-gray-900 text-red-400">
-        Failed to load profile. Please log in.
-      </div>
-    );
-  }
 //   console.log(profile?.data[0])
 
   return (

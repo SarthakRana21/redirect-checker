@@ -24,10 +24,10 @@ const LoginPage = () => {
         console.log("login Reqest", loginRequest)
 
         if(loginRequest.status == 200) { 
-          setTimeout(() => {
-            refetch();
+         
+            await refetch();
             navigate("/profile");
-          }, 500);
+         
         } 
         
       } catch (error) {
