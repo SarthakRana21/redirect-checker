@@ -101,7 +101,8 @@ export default function Home() {
             const res = await axios.post(API_URL, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                }
+                },
+                withCredentials: true
             })
             // console.log('finised', res.data.data)
             setLoading(false)
