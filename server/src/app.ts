@@ -3,7 +3,8 @@ import cors from 'cors'
 import checkerRouter from './routes/checker.route'
 import dotenv from 'dotenv'
 import userRouter from './routes/user.routes'
-import cookieParser = require('cookie-parser')
+import cookieParser from 'cookie-parser'
+import './jobs/redirectWorker'
 
 dotenv.config()
 
