@@ -171,7 +171,7 @@ const logoutUser = asyncHandler(async (req: AuthRequest, res) => {
 
 const userProfile = asyncHandler(async (req: AuthRequest, res) => {
     const user = req.user as JwtPayload
-    if(!user) res.status(401).json(
+    if(!user) return res.status(401).json(
         new ApiResponse(401, "invalid user")
     )
     
@@ -182,7 +182,7 @@ const userProfile = asyncHandler(async (req: AuthRequest, res) => {
             email: users.email
         }).from(users).where(eq(users.id, user[0].id))
         console.log(profile)
-        res.status(200)
+        return res.status(200)
         .json(
             new ApiResponse(200, profile, "user profile")
         )
