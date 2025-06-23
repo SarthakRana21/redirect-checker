@@ -3,6 +3,9 @@ import xlsx from 'xlsx';
 import axios from 'axios';
 import fs from 'fs/promises';
 import { connection } from './queue';
+import { db } from '../../db';
+import { records } from '../models/records.model';
+import { eq } from 'drizzle-orm';
 
 interface redirectObject {
     address: string;
@@ -16,6 +19,7 @@ function wait(ms: number) {
 }
 
 export const redirectWorker = new Worker('redirect-check', async job => {
+    console.log("worker started")
     const path = job.data.filePath;
     const result: redirectObject[] = [];
 
@@ -38,12 +42,22 @@ export const redirectWorker = new Worker('redirect-check', async job => {
                 expected_url: item.redirect_url
             });
         }
+
+        job.updateProgress({
+            current: i,
+            total: data.length,
+            message: `Processing item ${i} of ${data.length}`
+        })
+
         await wait(Math.floor(Math.random() * (7000 - 3000 + 1)) + 3000);
     }
 
     await fs.unlink(path);
 
-    // Save `result` to DB or emit to client (if using socket)
+    await db.update(records).set({
+        data: result.toString(),
+        status: await job.getState()
+    }).where(eq(records.jobId, `${job.id}`))
+
     console.log("Redirect Check Completed", result);
-    job.isCompleted
 }, { connection });
