@@ -55,8 +55,8 @@ export const redirectWorker = new Worker('redirect-check', async job => {
     await fs.unlink(path);
 
     await db.update(records).set({
-        data: result.toString(),
-        status: await job.getState()
+        data: JSON.stringify(result),
+        status: "complete"
     }).where(eq(records.jobId, `${job.id}`))
 
     console.log("Redirect Check Completed", result);
