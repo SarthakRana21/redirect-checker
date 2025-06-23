@@ -26,7 +26,7 @@ const LoginPage = () => {
         if(loginRequest.status == 200) { 
          
             await refetch();
-            navigate("/profile");
+            navigate("/dashboard");
          
         } 
         

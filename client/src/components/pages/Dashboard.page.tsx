@@ -1,7 +1,7 @@
 import React from "react";
 import { useProfile } from "../hooks/useProfile.hook";
 
-const ProfilePage: React.FC = () => {
+const Dashboard: React.FC = () => {
   const { data: profile} = useProfile();
     
   console.log([profile])
@@ -37,4 +37,4 @@ const ProfileItem: React.FC<ProfileItemProps> = ({ label, value }) => (
   </div>
 );
 
-export default ProfilePage;
+export default Dashboard;

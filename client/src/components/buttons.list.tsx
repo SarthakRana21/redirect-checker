@@ -39,7 +39,7 @@ const RegisterButton: React.FC = () => {
 const MyAccountButton: React.FC = () => {
   return (
     <div className="flex justify-center">
-      <Link to={"/profile"}
+      <Link to={"/dashboard"}
         className="
           px-6 py-2 rounded-xl text-sm font-medium text-white
           bg-gradient-to-r from-indigo-600 to-purple-600

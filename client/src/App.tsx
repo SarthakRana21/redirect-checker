@@ -3,7 +3,7 @@ import Header from "./components/Header"
 import Home from "./components/Home"
 import LoginPage from "./components/pages/Login.page"
 import RegisterPage from "./components/pages/Register.page"
-import ProfilePage from "./components/pages/Profile.page"
+import Dashboard from "./components/pages/Dashboard.page"
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         
      </BrowserRouter>

@@ -37,7 +37,7 @@ const RegisterPage = () => {
 
             if(registerRequest.status == 200) {
                 await refetch()
-                navigate("/profile")
+                navigate("/dashboard")
             }
 
         } catch (error) {
