@@ -20,7 +20,7 @@ const ExcelInstructions = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:bg-gray-700">
+            <tr className="hover:bg-gray-900">
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-1/page.html
               </td>
@@ -28,7 +28,7 @@ const ExcelInstructions = () => {
                 https://www.example.com/new-path-1/page.html
               </td>
             </tr>
-            <tr className="hover:bg-gray-700">
+            <tr className="hover:bg-gray-900">
               <td className="px-4 py-2 border border-[#3b3b3b] break-all text-[#eaeaea]">
                 https://www.example.com/path-2/page.html
               </td>
