@@ -1,5 +1,5 @@
 import multer from "multer";
-import { redirectChecker } from "../controllers/checker.controller";
+import { getAllJobs, getOneJob, redirectChecker } from "../controllers/checker.controller";
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware";
 
@@ -10,6 +10,16 @@ checkerRouter.route('/check-redirect').post(
     upload.single('file'),
     verifyJWT, 
     redirectChecker
+)
+
+checkerRouter.route('/jobs').get(
+    verifyJWT,
+    getAllJobs
+)
+
+checkerRouter.route('/job/:jobid').get(
+    verifyJWT,
+    getOneJob
 )
 
 export default checkerRouter
