@@ -1,0 +1,49 @@
+import { Worker } from 'bullmq';
+import xlsx from 'xlsx';
+import axios from 'axios';
+import fs from 'fs/promises';
+import { connection } from './queue';
+
+interface redirectObject {
+    address: string;
+    status_code?: number;
+    redirect_url: string;
+    expected_url?: string;
+}
+
+function wait(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export const redirectWorker = new Worker('redirect-check', async job => {
+    const path = job.data.filePath;
+    const result: redirectObject[] = [];
+
+    const workbook = xlsx.readFile(path);
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const data = xlsx.utils.sheet_to_json(sheet);
+
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i] as redirectObject;
+        const response = await axios.get(item.address, {
+            maxRedirects: 0,
+            validateStatus: () => true
+        });
+
+        if (response.headers.location !== item.redirect_url) {
+            result.push({
+                address: item.address,
+                status_code: response.status || 0,
+                redirect_url: response.headers.location,
+                expected_url: item.redirect_url
+            });
+        }
+        await wait(Math.floor(Math.random() * (7000 - 3000 + 1)) + 3000);
+    }
+
+    await fs.unlink(path);
+
+    // Save `result` to DB or emit to client (if using socket)
+    console.log("Redirect Check Completed", result);
+    job.isCompleted
+}, { connection });
