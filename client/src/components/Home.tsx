@@ -3,14 +3,8 @@ import React, { useState, type FormEvent } from "react"
 import * as xlsx from 'xlsx'
 import { BarLoader } from "react-spinners";
 import ExcelInstructions from "./excelInstruction";
+import type { redirectObject } from "./interfaces/interface";
 
-
-interface redirectObject {
-    address: string;
-    status_code: number;
-    redirect_url: string;
-    expected_url?: string;
-}
 
 const resutlArea = (data: redirectObject[]) => {
 
