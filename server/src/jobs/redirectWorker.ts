@@ -20,6 +20,10 @@ function wait(ms: number) {
 
 export const redirectWorker = new Worker('redirect-check', async job => {
     console.log("worker started")
+    await db.update(records).set({
+        status: "active"
+    }).where(eq(records.jobId, `${job.id}`))
+
     const path = job.data.filePath;
     const result: redirectObject[] = [];
 
