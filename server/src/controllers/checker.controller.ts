@@ -7,6 +7,7 @@ import { JwtPayload } from 'jsonwebtoken';
 import { db } from '../../db';
 import { records } from '../models/records.model';
 import { and, eq, InferInsertModel} from 'drizzle-orm';
+import dayjs from 'dayjs';
 
 
 type InsertObject = InferInsertModel<typeof records>;
@@ -35,14 +36,14 @@ const redirectChecker = asyncHandler(async (req: AuthRequest, res) => {
             userId: userId,
             jobId: job.id,
             status: jobStatus,
-            createdAt: new Date(job.timestamp).toISOString(),
+            createdAt: dayjs(job.timestamp).format('MMMM D, YYYY h:mm A'),
         } as InsertObject)    
 
         return res.status(200).json(
             new ApiResponse(200, {
                 jobId: job.id,
                 jobStatus: jobStatus,
-                createdAt: new Date(job.timestamp).toISOString()
+                createdAt: dayjs(job.timestamp).format('MMMM D, YYYY h:mm A')
             }, "Job added sucess")
         )
     } catch (error) {
