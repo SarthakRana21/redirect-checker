@@ -1,73 +1,18 @@
 import axios from "axios";
 import React, { useState, type FormEvent } from "react"
-import * as xlsx from 'xlsx'
 import { BarLoader } from "react-spinners";
 import ExcelInstructions from "./excelInstruction";
-import type { redirectObject } from "./interfaces/interface";
+import { useNavigate } from "react-router-dom";
+import { useProfile } from "./hooks/useProfile.hook";
 
 
-const resutlArea = (data: redirectObject[]) => {
-
-    const downloadExcel = (data: redirectObject[]) => {
-        const worksheet = xlsx.utils.json_to_sheet(data);
-        const workbook = xlsx.utils.book_new();
-        xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1")
-        xlsx.writeFile(workbook, `redirect-checker-${Date.now()}.xlsx`)
-    }
-
-    return (
-        <div className="w-full h-full flex flex-col items-center px-4 py-8 text-gray-700">
-            <div className="w-full flex justify-evenly items-center">
-            <h2 className="text-2xl font-semibold text-violet-400">
-                Faulty Redirect Results: {data.length}
-            </h2>
-            <button
-                onClick={() => downloadExcel(data)}
-                className="download text-white"
-            >
-                Download Output Excel
-            </button>
-            </div>
-
-            <div className="w-full mt-7 max-w-3xl h-90 text-sm space-y-6 overflow-y-scroll transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:scale-105">
-            {data.map((item, index) => (
-                <div
-                key={index}
-                className="w-full bg-gray-600 shadow-md rounded-2xl p-6 border border-gray-800"
-                >
-                <p className="text-gray-100">
-                    <span className="font-medium text-violet-300">Address:</span>
-                    {item.address}
-                </p>
-                <p className="text-gray-100">
-                    <span className="font-medium text-violet-300">Status Code:</span>
-                    {item.status_code}
-                </p>
-                <p className="text-gray-100">
-                    <span className="font-medium text-violet-300">Redirect URL:</span>
-                    {item.redirect_url || '—'}
-                </p>
-                <p className="text-gray-100">
-                    <span className="font-medium text-violet-300">Expected URL:</span>
-                    {item.expected_url || '—'}
-                </p>
-                </div>
-            ))}
-            </div>
-        </div>
-    );
-
-}
-
-export default function Home() {    
-
+const Form: React.FC = () => {
     const API_URL= `${import.meta.env.VITE_API_URL}check-redirect`
 
     const [file, setFile] = useState<File | null>(null)
-    const [data, setData] = useState<redirectObject[]>([])
     const [loading, setLoading] = useState<boolean>(false);
-    const [sucess, setSucess] = useState<boolean>(false)
 
+    const navigate = useNavigate()
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -77,8 +22,6 @@ export default function Home() {
     }
 
     const handleUpload = async (e: FormEvent) => {
-
-        setSucess(false)
 
         e.preventDefault()
         if(!file) {
@@ -92,7 +35,7 @@ export default function Home() {
 
         try {
             // console.log('started upalod')
-            const res = await axios.post(API_URL, formData, {
+            await axios.post(API_URL, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -100,11 +43,7 @@ export default function Home() {
             })
             // console.log('finised', res.data.data)
             setLoading(false)
-            if(res.data.data.length > 0) {
-                setData(res.data.data)
-            } else {
-                setSucess(true)
-            }
+            navigate('/dashboard')
 
         } catch (error) {
             setLoading(false)
@@ -114,12 +53,9 @@ export default function Home() {
         }
         
     }
-    // console.log(typeof data)
 
     return (
-
-       <div className="mt-10">
-         <form onSubmit={handleUpload} className="flex justify-center items-center flex-col gap-10">
+        <form onSubmit={handleUpload} className="flex justify-center items-center flex-col gap-10">
             <div className="md:w-2/3 lg:w-1/3 border-2 h-32 border-dashed border-purple-500 rounded transition delay-100 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
                 <input
                     className="w-full h-full text-lg content-center lg:pl-[26%] pl-[35%] cursor-pointer text-purple-400" 
@@ -132,14 +68,35 @@ export default function Home() {
                 
             </div>
         </form>
+    )
+}
+
+
+const PleaseLogin: React.FC = () => {
+  return (
+    <div className="mt-20 flex flex-col items-center justify-center text-white px-4">
+      <h2 className="text-2xl md:text-3xl font-semibold text-purple-400 mb-4 text-center">
+        Please login or register to check redirects
+      </h2>
+      <p className="text-gray-400 text-center max-w-md">
+        You need to be authenticated to upload an Excel file and use the redirect checker tool.
+      </p>
+    </div>
+  );
+};
+
+
+export default function Home() {    
+
+    const {data:profile} = useProfile({refetch: false})
+    // console.log(profile?.data)
+    return (
+
+       <div className="mt-10">
+            { profile?.data == undefined ? <PleaseLogin /> : <Form />}
         
         <div className="my-10 flex justify-center items-center flex-col gap-3">
-              {sucess && (
-            <div className="text-xl font-semibold text-green-300 underline">
-                Redirect Check Sucess
-            </div>
-        )}
-            {data.length > 0 ? resutlArea(data) : <ExcelInstructions />}
+            <ExcelInstructions />
         </div>
       
        </div>
