@@ -21,12 +21,12 @@ const LoginPage = () => {
             email,
             password
         }, { withCredentials: true })
-        console.log("login Reqest", loginRequest)
+        // console.log("login Reqest", loginRequest)
 
         if(loginRequest.status == 200) { 
          
             await refetch();
-            navigate("/dashboard");
+            navigate("/");
          
         } 
         

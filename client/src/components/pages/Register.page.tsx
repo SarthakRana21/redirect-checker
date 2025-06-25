@@ -33,11 +33,11 @@ const RegisterPage = () => {
                 password
             }, {withCredentials: true});
 
-            console.log(registerRequest);
+            // console.log(registerRequest);
 
             if(registerRequest.status == 200) {
                 await refetch()
-                navigate("/dashboard")
+                navigate("/")
             }
 
         } catch (error) {

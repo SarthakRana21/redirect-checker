@@ -16,7 +16,7 @@ const redirectChecker = asyncHandler(async (req: AuthRequest, res) => {
     const path = req.file?.path
     const user = req.user as JwtPayload
 
-    console.log(user)
+    // console.log(user)
     if(!user) return res.status(401).json(
         new ApiResponse(401, "Please login to check redirects")
     )

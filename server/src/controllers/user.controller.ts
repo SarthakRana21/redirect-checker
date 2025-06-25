@@ -181,7 +181,7 @@ const userProfile = asyncHandler(async (req: AuthRequest, res) => {
             fullName: users.fullName,
             email: users.email
         }).from(users).where(eq(users.id, user[0].id))
-        console.log(profile)
+        // console.log(profile)
         return res.status(200)
         .json(
             new ApiResponse(200, profile, "user profile")
