@@ -2,7 +2,7 @@ import { Queue } from 'bullmq';
 import Redis from 'ioredis';
 
 export const connection = {
-  host: '127.0.0.1',
+  host: process.env.REDIS_HOST || '127.0.0.1',
   port: 6379,
 };
 
