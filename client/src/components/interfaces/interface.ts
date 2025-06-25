@@ -8,5 +8,6 @@ export interface redirectObject {
 export interface tableData {
     jobId: number,
     status: string,
+    data?: string,
     createdAt: string
 }
