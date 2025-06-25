@@ -40,13 +40,13 @@ pipeline {
                     set -a
                     . /var/lib/jenkins/workspace/${NAME}/server/.env
                     set +a
-                    docker run -dit -p 5300:5000 --name ${NAME}_server ${NAME}_server
+                    docker run -dit -p 5300:5000 -v redirect-db:/drizzle  --restart unless-stopped --name ${NAME}_server ${NAME}_server
                 """
                 sh """
                     set -a
                     . /var/lib/jenkins/workspace/${NAME}/client/.env
                     set +a
-                    docker run -dit -p 5200:4173 --name ${NAME}_client ${NAME}_client
+                    docker run -dit -p 5200:4173 --restart unless-stopped --name ${NAME}_client ${NAME}_client
                 """
             }
         }
