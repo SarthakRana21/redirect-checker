@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useProfile } from "../hooks/useProfile.hook";
 import SimpleTable from "../table";
 import axios from "axios";
@@ -11,17 +11,24 @@ const Dashboard: React.FC = () => {
   const { data: profile} = useProfile();
     
   // console.log([profile])
-  const name = profile?.data[0]?.fullName
-  const email = profile?.data[0]?.email
+  const user = profile?.data?.[0];
+  const name = user?.fullName || "N/A";
+  const email = user?.email || "N/A";
 
   // console.log(profile?.data[0])
 
-  axios.get(`${import.meta.env.VITE_API_URL}jobs`, {
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_URL}jobs`, {
       withCredentials: true
-  })
-  .then(response => {
-      setData(response.data.data)
-  })
+    })
+    .then(response => {
+      setData(response.data.data);
+    })
+    .catch(error => {
+      console.error("Failed to fetch jobs", error);
+    });
+  }, []);
+
 
   return (
     <div className="min-h-full w-full flex mt-10 flex-col gap-10 justify-center items-center bg-gray-900 px-4">
@@ -31,7 +38,7 @@ const Dashboard: React.FC = () => {
         <div className="space-y-4">
           <ProfileItem label="Full Name" value={name || "N/A"} />
           <ProfileItem label="Email" value={email || "N/A"} />
-          {/* Add more fields as needed */}
+          
         </div>
       </div>
 
