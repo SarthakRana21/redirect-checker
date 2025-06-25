@@ -101,8 +101,8 @@ const loginUser = asyncHandler(async (req, res) => {
     try {
         const user = await db.select().from(users).where(eq(users.email, email))
 
-        if(user.length == 0) return res.status(203).json(
-            new ApiResponse(404, null, "User does not exist")
+        if(user.length == 0) return res.status(404).json(
+            new ApiResponse(401, null, "Credentails are not Valid")
         )
 
         const dbPass = user[0].password
