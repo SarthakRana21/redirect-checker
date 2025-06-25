@@ -63,5 +63,5 @@ export const redirectWorker = new Worker('redirect-check', async job => {
         status: "complete"
     }).where(eq(records.jobId, `${job.id}`))
 
-    console.log("Redirect Check Completed", result);
-}, { connection });
+    // console.log("Redirect Check Completed", result);
+}, { connection, concurrency: 5 });
