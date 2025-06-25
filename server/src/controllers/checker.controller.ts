@@ -102,7 +102,7 @@ const getOneJob = asyncHandler(async (req: AuthRequest, res) => {
                 new ApiResponse(404, null, `No job found with jobid: ${jobid}`)
             );
         }
-        console.log(jobData)
+        // console.log(jobData)
         const payload = {
             ...jobData[0],
             data: jobData[0].data ? JSON.parse(jobData[0].data) : null
