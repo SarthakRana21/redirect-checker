@@ -29,7 +29,7 @@ const SimpleTable = ({ data }: { data: tableData[] }) => {
     }
   };
 
-  const cellClickHandle = (cellData: string, row: Record<string, tableData>) => {
+  const cellClickHandle = (_cellData: string, row: Record<string, tableData>) => {
     // console.log('cellData:', row[cellData])
     // console.log('Row:', row)
     navigate(`/view/${row.jobId}`)
