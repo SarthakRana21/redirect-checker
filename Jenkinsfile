@@ -40,7 +40,7 @@ pipeline {
                     set -a
                     . /var/lib/jenkins/workspace/${NAME}/server/.env
                     set +a
-                    docker run -dit -p 5300:5000 -v redirect-db:/drizzle  --restart unless-stopped --name ${NAME}_server ${NAME}_server
+                    docker run -dit -v redirect-db:/drizzle  --restart unless-stopped --network host --name ${NAME}_server ${NAME}_server
                 """
                 sh """
                     set -a
