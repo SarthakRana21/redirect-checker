@@ -8,6 +8,10 @@ RUN npm install
 
 EXPOSE 5000
 
+RUN npm run generate
+
+RUN npm run push
+
 RUN npm run build
 
 CMD ["npm", "run", "start", "--", "--host"]
