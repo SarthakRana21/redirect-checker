@@ -1,7 +1,10 @@
 import { TableComponent } from "react-table-pagination-v1";
 import type { tableData } from "./interfaces/interface";
+import { useNavigate } from "react-router-dom";
 
 const SimpleTable = ({ data }: { data: tableData[] }) => {
+
+  const navigate = useNavigate()
   
   const tableConfig = {
     tableClassName: "min-w-full bg-gray-800 rounded-lg",
@@ -27,8 +30,9 @@ const SimpleTable = ({ data }: { data: tableData[] }) => {
   };
 
   const cellClickHandle = (cellData: string, row: Record<string, tableData>) => {
-    console.log('cellData:', row[cellData])
-    console.log('Row:', row)
+    // console.log('cellData:', row[cellData])
+    // console.log('Row:', row)
+    navigate(`/view/${row.jobId}`)
   }
 
   return <TableComponent fullData={data} data={data} config={tableConfig} onCellClick={cellClickHandle} />;
