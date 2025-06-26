@@ -35,7 +35,7 @@ export default function Header() {
     // console.log(profile?.data)
 
     return (
-        <div className="w-full py-4 flex justify-center bg-gray-900 items-center border-b border-purple-600">
+        <div className="w-full py-4 flex justify-center bg-gray-900 items-center border-b border-purple-600 sticky top-0 z-20">
             <div className="w-[80%] flex justify-between items-center">
                 <h2 className="font-semibold text-2xl pointer">
                     <Link to="/" className="text-gray-50">
