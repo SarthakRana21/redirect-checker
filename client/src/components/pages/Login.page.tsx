@@ -42,7 +42,7 @@ const LoginPage = () => {
     }
 
   return (
-    <div className="min-h-[70vh] flex items-center justify-center bg-gray-900 px-4">
+    <div className="min-h-[70vh] flex items-center justify-center bg-gray-900 px-4 my-10">
       <div className="max-w-md w-full bg-gray-800 rounded-lg shadow-lg p-8">
         <h2 className="text-3xl font-semibold text-white mb-6 text-center">
           Login

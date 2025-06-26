@@ -1,5 +1,5 @@
 import multer from "multer";
-import { getAllJobs, getOneJob, redirectChecker } from "../controllers/checker.controller";
+import { getAllJobs, getJobProgress, getOneJob, redirectChecker } from "../controllers/checker.controller";
 import { Router } from "express";
 import { verifyJWT } from "../middleware/auth.middleware";
 
@@ -22,4 +22,8 @@ checkerRouter.route('/job/:jobid').get(
     getOneJob
 )
 
+checkerRouter.route('/job/progress/:jobid').get(
+    verifyJWT,
+    getJobProgress
+)
 export default checkerRouter

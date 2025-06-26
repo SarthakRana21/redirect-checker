@@ -19,10 +19,12 @@ function wait(ms: number) {
 }
 
 export const redirectWorker = new Worker('redirect-check', async job => {
-    console.log("worker started")
+  console.log("worker started");
+  
+  try {
     await db.update(records).set({
-        status: "active"
-    }).where(eq(records.jobId, `${job.id}`))
+      status: "active"
+    }).where(eq(records.jobId, `${job.id}`));
 
     const path = job.data.filePath;
     const result: redirectObject[] = [];
@@ -32,36 +34,67 @@ export const redirectWorker = new Worker('redirect-check', async job => {
     const data = xlsx.utils.sheet_to_json(sheet);
 
     for (let i = 0; i < data.length; i++) {
+      try {
         const item = data[i] as redirectObject;
+
         const response = await axios.get(item.address, {
-            maxRedirects: 0,
-            validateStatus: () => true
+          maxRedirects: 0,
+          validateStatus: () => true,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+            'Accept': 'text/html',
+          }
         });
 
         if (response.headers.location !== item.redirect_url) {
-            result.push({
-                address: item.address,
-                status_code: response.status || 0,
-                redirect_url: response.headers.location,
-                expected_url: item.redirect_url
-            });
+          result.push({
+            address: item.address,
+            status_code: response.status || 0,
+            redirect_url: response.headers.location,
+            expected_url: item.redirect_url
+          });
         }
 
-        job.updateProgress({
-            current: i,
-            total: data.length,
-            message: `Processing item ${i} of ${data.length}`
-        })
+        await job.updateProgress({
+          current: i + 1,
+          total: data.length,
+          message: `Processing item ${i+1} of ${data.length}`
+        });
 
-        await wait(Math.floor(Math.random() * (7000 - 3000 + 1)) + 3000);
+        if (i % 100 === 0) {
+          await wait(Math.floor(Math.random() * (17000 - 12000 + 1)) + 12000);
+        } else {
+          await wait(Math.floor(Math.random() * (7000 - 4000 + 1)) + 4000);
+        }
+      } catch (itemError) {
+        console.error(`Error processing item ${i} (${data[i]}):`, itemError);
+      }
     }
 
-    await fs.unlink(path);
+    try {
+      await fs.unlink(path);
+    } catch (unlinkError) {
+      console.warn(`Failed to delete file at path ${path}:`, unlinkError);
+    }
 
     await db.update(records).set({
-        data: JSON.stringify(result),
-        status: "complete"
-    }).where(eq(records.jobId, `${job.id}`))
+      data: JSON.stringify(result),
+      status: "complete"
+    }).where(eq(records.jobId, `${job.id}`));
 
     console.log("Redirect Check Completed: ", job.id);
+
+  } catch (err) {
+    console.error("Worker error:", err);
+
+    try {
+      await db.update(records).set({
+        status: "failed",
+      }).where(eq(records.jobId, `${job.id}`));
+    } catch (dbErr) {
+      console.error("Failed to update job status to failed:", dbErr);
+    }
+
+    throw err;
+  }
 }, { connection, concurrency: 5 });

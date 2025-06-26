@@ -3,7 +3,29 @@ import type { redirectObject, tableData } from "../interfaces/interface";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { PacmanLoader } from 'react-spinners';
+
+interface ProgressBarProps {
+  current: number;
+  total: number;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({ current, total }) => {
+  const percent = Math.round((current / total) * 100);
+
+  return (
+    <div className="w-full max-w-md space-y-2">
+      <div className="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+        <div
+          className="bg-green-500 h-full transition-all duration-300"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+      <div className="text-sm text-gray-700">
+        {`Checking URL no: ${current} of ${total}`}
+      </div>
+    </div>
+  );
+};
 
 const ResultArea = (data: redirectObject[]) => {
   const downloadExcel = (data: redirectObject[]) => {
@@ -56,6 +78,9 @@ export const ViewResult = () => {
   const { jobid } = useParams();
   const [response, setResponse] = useState<tableData>();
   const [data, setData] = useState<redirectObject[]>([]);
+  const [current, setCurrent] = useState(0)
+  const [total, setTotal] = useState(0)
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -73,8 +98,33 @@ export const ViewResult = () => {
       });
   }, [jobid]);
 
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval>
+
+    if(response?.status == 'active') {
+      interval = setInterval(() => {
+       axios.get(`${import.meta.env.VITE_API_URL}job/progress/${jobid}`, {
+        withCredentials: true,
+      })
+      .then(res => {
+        // console.log(res)
+        setTotal(res.data?.data?.total)
+        setCurrent(res.data?.data?.current)
+      })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .catch(_err => {
+        navigate(0)
+        clearInterval(interval)
+      })
+      }, 5000)
+    }
+    return () => {
+      if (interval) clearInterval(interval)
+    }
+  }, [jobid, navigate, response?.status])
+
   return (
-    <div className="min-h-full w-full flex mt-10 flex-col gap-10 justify-center items-center bg-gray-900 px-4">
+    <div className="min-h-full w-full flex flex-col gap-10 justify-center items-center bg-gray-900 px-4 my-10">
       <div className="bg-gray-800 w-1/2 rounded-lg shadow-lg py-10 px-10 text-white">
         <div className='mb-8 flex flex-row items-start justify-between'>
             <div
@@ -93,13 +143,13 @@ export const ViewResult = () => {
           </div>
           <div className="flex justify-between border-b border-gray-600 pb-2">
             <span className="text-gray-400">Created At:</span>
-            <span>{response?.createdAt ? new Date(response.createdAt).toLocaleString() : 'N/A'}</span>
+            <span>{response?.createdAt ? response.createdAt : 'N/A'}</span>
           </div>
         </div>
       </div>
 
       {response?.status == "complete" && ResultArea(data)}
-      {response?.status == "active" && <PacmanLoader color="#ffa100" margin={2} size={25} />}
+      {response?.status == "active" && <ProgressBar current={current} total={total}/>}
     </div>
   );
 };

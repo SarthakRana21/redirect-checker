@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
 
 
   return (
-    <div className="min-h-full w-full flex mt-10 flex-col gap-10 justify-center items-center bg-gray-900 px-4">
+    <div className="min-h-full w-full flex my-10 flex-col gap-10 justify-center items-center bg-gray-900 px-4">
       <div className="bg-gray-800 w-1/2 rounded-lg shadow-lg py-10 px-20 text-white">
         <h2 className="text-3xl font-semibold mb-6 text-center">My Profile</h2>
 
