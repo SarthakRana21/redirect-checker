@@ -118,8 +118,36 @@ const getOneJob = asyncHandler(async (req: AuthRequest, res) => {
 
 })
 
+const getJobProgress = asyncHandler(async (req: AuthRequest, res) => {
+    const { jobid } = req.params
+    const user = req?.user
+
+    if(!user) return res.status(401).json(
+        new ApiResponse(401, "Please login to check Job progress")
+    )    
+
+    try {
+        const job = await redirectQueue.getJob(jobid)
+        // console.log(job)
+        if (job) {
+            return res.status(200).json(
+                new ApiResponse(200, job.progress, "job progress")
+            )
+        }
+
+        return res.status(404).json(
+            new ApiResponse(404, "No job found")
+        )
+
+    } catch (error) {
+        throw new ApiError(400, `Error while geting job update- \n${error}`)
+    }
+
+})
+
 export {
     redirectChecker,
     getAllJobs,
-    getOneJob
+    getOneJob,
+    getJobProgress
 }
