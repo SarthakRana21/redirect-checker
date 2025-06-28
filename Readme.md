@@ -1,3 +1,12 @@
+project preview
+
+
+
+https://github.com/user-attachments/assets/612ca094-53c5-4168-b132-9a1f79971415
+
+
+
+
 # 🔁 Redirect Checker
 
 A web-based tool to bulk check redirects from 100 to 1000+ URLs via Excel upload. Built to eliminate the pain of manual checking and clunky script setups.
@@ -14,12 +23,6 @@ A web-based tool to bulk check redirects from 100 to 1000+ URLs via Excel upload
 - 📄 Paginated results using [react-table-pagination-v1](https://www.npmjs.com/package/react-table-pagination-v1)
 - ⚠️ Handles large jobs efficiently
 - 🌐 Web UI for smooth experience
-
----
-
-## 📸 Screenshots
-
-*(Add screenshots here if available — UI upload, results table, etc.)*
 
 ---
 
