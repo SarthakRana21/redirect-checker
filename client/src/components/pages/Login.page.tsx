@@ -35,7 +35,7 @@ const LoginPage = () => {
             setError("Invalid Credentials")
           }
           if(axios.isAxiosError(error) && error.response?.status == 404) {
-            setError("User Already Exist")
+            setError("User not Exist")
           }
           
       };
